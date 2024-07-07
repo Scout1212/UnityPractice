@@ -11,17 +11,14 @@ public class PlayerMove : MonoBehaviour
     public Rigidbody2D sb;
     private Vector2 movement;
     private int moveSpeed = 5;
-    private bool inCoolDown;
     void Start()
     {
         transform.position = new Vector3(0, 3, 0);
-        inCoolDown = false;
     }
 
     private void Update()
     {
         PlayerInput();
-        
     }
 
     private void FixedUpdate()
