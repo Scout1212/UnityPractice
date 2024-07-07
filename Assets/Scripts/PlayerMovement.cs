@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using Vector2 = UnityEngine.Vector2;
@@ -18,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private GameObject portalPrefab;
+
+    private GameObject currentPortal;
 
     private bool saved = false;
     private Vector2 savedVelo;
@@ -56,12 +60,21 @@ public class PlayerMovement : MonoBehaviour
                 savedVelo = rb.velocity * 2;
                 savedPos = transform.position;
                 saved = true;
+                
+                //todo fix the placing of the portal because it does not show on the screen
+                //todo make a ground spawner that spawns prefabs of the ground
+                //todo also make the teleporting more fun
+                if(currentPortal == null)
+                    Instantiate(portalPrefab, savedPos, quaternion.identity);
+                else
+                    currentPortal.transform.position = savedPos;
             }
             else
             {
                 transform.position = savedPos;
                 rb.velocity += savedVelo;
                 saved = false;
+                currentPortal = null;
             }
         }
         
